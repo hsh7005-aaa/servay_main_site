@@ -26,7 +26,7 @@ class handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        self._send_cors_headers
+        self._send_cors_headers()
         try:
             sheet = get_sheet()
             all_rows = sheet.get_all_records()
