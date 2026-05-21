@@ -33,11 +33,16 @@ class handler(BaseHTTPRequestHandler):
 
             sheet = get_sheet()
 
-            # 헤더 없으면 추가
+            # ✅ 수정: 빈 시트이거나 헤더가 없는 경우 안전하게 처리
             existing = sheet.get_all_values()
-            if not existing or existing[0][0] != "타임스탬프":
+            has_header = (
+                len(existing) > 0
+                and len(existing[0]) > 0
+                and existing[0][0] == "타임스탬프"
+            )
+            if not has_header:
                 sheet.insert_row(
-                    ["타임스탬프","이름","연령대","만족도","이용빈도","추천여부","의견"],
+                    ["타임스탬프", "이름", "연령대", "만족도", "이용빈도", "추천여부", "의견"],
                     index=1
                 )
 
